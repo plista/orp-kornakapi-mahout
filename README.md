@@ -19,7 +19,6 @@ Requirements
 - Maven
 - Mahout
 - Kornakapi
-- php5-curl
 -  make sure your response time is less than 100ms
 
 If you consider to participate with a server from outside of Germany, please get in touch with us:<br>
@@ -45,13 +44,10 @@ For further details you may want to have a look at http://wiki.ubuntuusers.de/Ap
 
 For further details you may want to have a look at http://php.net/manual/en/install.php
 
-**3. getting Sdk from git**
+**3. getting Kornakapi Recommender from git**
 
  install git<br>
 `sudo apt-get install git`
-
- make sure to be in the right place<br>
-`ch /var/www/`
 
  cloning the git<br>
 `git clone git://github.com/plista/orp-kornakapi-mahout.git`
