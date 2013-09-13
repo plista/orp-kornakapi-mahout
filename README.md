@@ -57,7 +57,7 @@ For further details you may want to have a look at http://php.net/manual/en/inst
 `ch /var/www/`
 
  cloning the git<br>
-`git clone git://github.com/plista/orp-sdk-php.git`
+`git clone git://github.com/plista/orp-kornakapi-mahout.git`
 
 For further details you may want to have a look at http://githowto.com/
 
@@ -71,9 +71,88 @@ changing permissions <br>
 `chmod 0777 logs` <br>
 `chown www-data:www-data logs` <br>
 
-**6. Sign up** <br>
-Sign up at http://orp.plista.com <br>
+**6. Install Maven 3
+"sudo apt-get install maven"
 
+**7. Install mahout 0.8
+download mahout o.8 from http://mahout.apache.org/
+tar xvf mahout-distribution-0.8-src.tar.gz
+cd mahout-distribution-0.8-src
+mvn install
+
+**8. Install MySQL and Setup your Database
+sudo apt-get install mysql-server
+mysql -u "username" -p "password"
+CREATE DATABASE kornakapi;
+USE kornakapi;
+
+CREATE TABLE taste_preferences (
+  user_id bigint(20) NOT NULL,
+  item_id bigint(20) NOT NULL,
+  preference float NOT NULL,
+  PRIMARY KEY (user_id,item_id),
+  KEY item_id (item_id)
+);
+
+CREATE TABLE taste_candidates (
+  label varchar(255) NOT NULL,
+  item_id bigint(20) NOT NULL,
+  PRIMARY KEY (label,item_id)
+);
+
+**9. Get Kornakapi
+git clone https://github.com/plista/kornakapi.git kornakapi
+
+**10. Configure Kornakapi Recommender
+mkdir model
+create kornakapi.conf
+copy paste in kornakapi.conf:
+
+<configuration>
+
+  <modelDirectory>/path/to/model/</modelDirectory>
+  <numProcessorsForTraining>8</numProcessorsForTraining>
+
+  <storageConfiguration>
+    <jdbcDriverClass>com.mysql.jdbc.Driver</jdbcDriverClass>
+    <jdbcUrl>jdbc:mysql://localhost/kornakapi</jdbcUrl>
+    <username>dbuser</username>
+    <password>secret</password>
+  </storageConfiguration>
+
+  <itembasedRecommenders>
+    <itembasedRecommender>
+      <name>itembased</name>
+      <similarityClass>org.apache.mahout.cf.taste.impl.similarity.LogLikelihoodSimilarity</similarityClass>
+      <similarItemsPerItem>25</similarItemsPerItem>
+      <retrainAfterPreferenceChanges>10000</retrainAfterPreferenceChanges>
+      <retrainCronExpression>0 0 1 * * ?</retrainCronExpression>
+    </itembasedRecommender>
+  </itembasedRecommenders>
+
+  <factorizationbasedRecommenders>
+    <factorizationbasedRecommender>
+      <name>weighted-mf</name>
+      <usesImplicitFeedback>false</usesImplicitFeedback>
+      <numberOfFeatures>4</numberOfFeatures>
+      <numberOfIterations>8</numberOfIterations>
+      <lambda>0.065</lambda>
+      <retrainAfterPreferenceChanges>2000</retrainAfterPreferenceChanges>
+      <retrainCronExpression>0 0 1 * * ?</retrainCronExpression>
+    </factorizationbasedRecommender>
+  </factorizationbasedRecommenders>
+
+</configuration>
+
+Be sure that you changed the path of you model directory in this line in kornakapi.conf <modelDirectory>/path/to/model/</modelDirectory>
+
+**11. Start Kornakapi
+cd /path/to/your/kornakapi/
+mvn -Dkornakapi.conf=/path/to/kornakapi.conf tomcat:run
+
+
+**12. Sign up** <br>
+Sign up at http://orp.plista.com <br>
 Be sure to use the entire URL during the sign up process e.g.
 `http://servername.domain/index-sdk-example.php`
 
