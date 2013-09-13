@@ -68,7 +68,7 @@ changing permissions <br>
 `chmod 0777 logs` <br>
 `chown www-data:www-data logs` <br>
 
-**6. Install Maven 3 **
+**6. Install Maven 3**
 `sudo apt-get install maven`
 
 **7. Install mahout 0.8 **
