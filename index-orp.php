@@ -9,7 +9,7 @@ use Plista\Orp\KornakapiMatrixFactorization\PushStatistic;
 
 
 // define path
-PushErrorHandler::setPath('/var/wwww/logs/');
+PushErrorHandler::setPath('/var/wwww/log/');
 
 // defining controller
 $controller = new \Plista\Orp\Sdk\Controller();
@@ -51,7 +51,7 @@ $body = $_POST['body'];
 	// if the request was a recommendation request and we got results, print them out
 	if ($result instanceof \Plista\Orp\Sdk\Recs) {
 		$res = $result->toJSON();
-		$log = file_put_contents('/var/www/log/'. 'Outgoing.log', $res . "\n", FILE_APPEND | LOCK_EX);
+		$log = file_put_contents('/var/www/log/Outgoing.log', $res . "\n", FILE_APPEND | LOCK_EX);
 
 		if (!$log) {
 			throw new Exception('Error: Unable to write to statistic file :(');

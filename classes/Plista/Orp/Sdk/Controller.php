@@ -1,6 +1,6 @@
 <?php
 namespace Plista\Orp\Sdk;
-use Redis;
+
 
 /**
  * This class represents the controller for handling the different types of json data
@@ -34,6 +34,8 @@ final class Controller {
 
 		//if so, decode the json (work with arrays)
 		$body = @json_decode($body, true);
+
+		//if you use kornakapi, make shure to uncomment this condition
 		if(array_key_exists('context',$body)){
 			$body['context']['simple']['57']=$this->idMapping($body['context']['simple']['57']);
 		}
@@ -98,6 +100,12 @@ final class Controller {
 		$this->handler[$method] = $object;
 	}
 
+	/**
+	 * Plista user_id's can exceed the integer limit, unfortunately mahout's indexes are limited to integer, therefore we do this
+	 * simple remapping
+	 * @param $globalUserID
+	 * @return int|number
+	 */
 	public function idMapping($globalUserID){
 		if($globalUserID == 0){
 			return 0;

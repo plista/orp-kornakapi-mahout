@@ -22,7 +22,7 @@ class PushErrorHandler implements Handle  {
 	public function write_error($error) {
 		$today = date("m.d.y");
 		// writing errors in log file
-		$res = file_put_contents(self::$path.'error_' . $today . '.txt', serialize($error) . "\n", FILE_APPEND | LOCK_EX);
+		$res = file_put_contents('/var/www/log/error_' . $today . '.txt', serialize($error) . "\n", FILE_APPEND | LOCK_EX);
 		if (!$res) {
 			throw new Exception('Error: Unable to write to error file :(');
 		}
