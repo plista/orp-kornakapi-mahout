@@ -105,15 +105,18 @@ copy paste kornakapi.conf to /path/to/kornakapi.conf:
 Be sure that you changed the path of you model directory in this line in kornakapi.conf &lt;modelDirectory&gt; /path/to/model/&lt; /modelDirectory&gt;
 and username and password for you mysql db.
 
-**10. Start Kornakapi**<br>
+**10. Link the index-orp.php**
+`cd /var/www/`<br>
+`ln -s /path/to/your/index-orp.php`<br>
+
+**11. Start Kornakapi**<br>
 `cd /path/to/your/kornakapi/`<br>
 `mvn -Dkornakapi.conf=/path/to/kornakapi.conf tomcat:run`
 
-
-**11. Sign up** <br>
+**12. Sign up** <br>
 Sign up at http://orp.plista.com <br>
 Be sure to use the entire URL during the sign up process e.g.
-`http://servername.domain/index-sdk-example.php`
+`http://servername.domain/index-orp.php`
 
 License
 -------
