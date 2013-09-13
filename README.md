@@ -108,10 +108,10 @@ USE kornakapi;`
 create kornakapi.conf
 copy paste in kornakapi.conf:
 
-\*<configuration>
+&lt;configuration>
 
-  <modelDirectory>/path/to/model/</modelDirectory>
-  <numProcessorsForTraining>8</numProcessorsForTraining>
+  &lt;modelDirectory>/path/to/model/</modelDirectory>
+ &lt;numProcessorsForTraining>8</numProcessorsForTraining>
 
   <storageConfiguration>
     <jdbcDriverClass>com.mysql.jdbc.Driver</jdbcDriverClass>
