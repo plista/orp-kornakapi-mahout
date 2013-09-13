@@ -113,36 +113,36 @@ copy paste in kornakapi.conf:
   &lt;modelDirectory>/path/to/model/</modelDirectory>
  &lt;numProcessorsForTraining>8</numProcessorsForTraining>
 
-  <storageConfiguration>
-    <jdbcDriverClass>com.mysql.jdbc.Driver</jdbcDriverClass>
-    <jdbcUrl>jdbc:mysql://localhost/kornakapi</jdbcUrl>
-    <username>dbuser</username>
-    <password>secret</password>
-  </storageConfiguration>
+ &lt;storageConfiguration>
+    &lt;jdbcDriverClass>com.mysql.jdbc.Driver</jdbcDriverClass>
+    &lt;jdbcUrl>jdbc:mysql://localhost/kornakapi</jdbcUrl>
+    &lt;username>dbuser</username>
+    &lt;password>secret</password>
+  &lt;/storageConfiguration>
 
-  <itembasedRecommenders>
-    <itembasedRecommender>
-      <name>itembased</name>
-      <similarityClass>org.apache.mahout.cf.taste.impl.similarity.LogLikelihoodSimilarity</similarityClass>
-      <similarItemsPerItem>25</similarItemsPerItem>
-      <retrainAfterPreferenceChanges>10000</retrainAfterPreferenceChanges>
-      <retrainCronExpression>0 0 1 * * ?</retrainCronExpression>
-    </itembasedRecommender>
-  </itembasedRecommenders>
+  &lt;itembasedRecommenders>
+    &lt;itembasedRecommender>
+      &lt;name>itembased</name>
+      &lt;similarityClass>org.apache.mahout.cf.taste.impl.similarity.LogLikelihoodSimilarity</similarityClass>
+      &lt;similarItemsPerItem>25</similarItemsPerItem>
+      &lt;retrainAfterPreferenceChanges>10000</retrainAfterPreferenceChanges>
+      &lt;retrainCronExpression>0 0 1 * * ?</retrainCronExpression>
+    &lt;/itembasedRecommender>
+  &lt;/itembasedRecommenders>
 
-  <factorizationbasedRecommenders>
-    <factorizationbasedRecommender>
-      <name>weighted-mf</name>
-      <usesImplicitFeedback>false</usesImplicitFeedback>
-      <numberOfFeatures>4</numberOfFeatures>
-      <numberOfIterations>8</numberOfIterations>
-      <lambda>0.065</lambda>
-      <retrainAfterPreferenceChanges>2000</retrainAfterPreferenceChanges>
-      <retrainCronExpression>0 0 1 * * ?</retrainCronExpression>
-    </factorizationbasedRecommender>
-  </factorizationbasedRecommenders>
+  &lt;factorizationbasedRecommenders>
+    &lt;factorizationbasedRecommender>
+      &lt;name>weighted-mf</name>
+      &lt;usesImplicitFeedback>false</usesImplicitFeedback>
+      &lt;numberOfFeatures>4</numberOfFeatures>
+      &lt;numberOfIterations>8</numberOfIterations>
+      &lt;lambda>0.065</lambda>
+      &lt;retrainAfterPreferenceChanges>2000</retrainAfterPreferenceChanges>
+      &lt;retrainCronExpression>0 0 1 * * ?</retrainCronExpression>
+    &lt;/factorizationbasedRecommender>
+  &lt;/factorizationbasedRecommenders>
 
-</configuration>\*
+&lt;/configuration>\*
 
 Be sure that you changed the path of you model directory in this line in kornakapi.conf <modelDirectory>/path/to/model/</modelDirectory>
 
