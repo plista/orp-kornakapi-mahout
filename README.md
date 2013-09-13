@@ -86,8 +86,8 @@ USE kornakapi;`
 `CREATE TABLE taste_preferences (
   user_id bigint(20) NOT NULL,
   item_id bigint(20) NOT NULL,
-  preference float NOT NULL,
-  PRIMARY KEY (user_id,item_id),
+  preference float NOT NULL,`<br>
+  `PRIMARY KEY (user_id,item_id),
   KEY item_id (item_id)
 );`
 
