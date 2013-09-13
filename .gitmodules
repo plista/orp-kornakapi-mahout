@@ -1,0 +1,9 @@
+[submodule "orp-sdk-php"]
+	path = orp-sdk-php
+	url = git://github.com/plista/orp-sdk-php/
+[submodule "sdk"]
+	path = sdk
+	url = git://github.com/plista/orp-sdk-php/
+[submodule "kornakapi"]
+	path = kornakapi
+	url = git://github.com/plista/kornakapi.git
