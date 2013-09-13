@@ -56,11 +56,12 @@ For further details you may want to have a look at http://githowto.com/
 
 
 **4. getting data being written** <br>
+'cd /var/www/'
 creating directory <br>
-`mkdir logs` <br>
+`mkdir log` <br>
 changing permissions <br>
-`chmod 0777 logs` <br>
-`chown www-data:www-data logs` <br>
+`chmod 0777 log` <br>
+`chown www-data:www-data log` <br>
 
 **5. Install Maven 3**<br>
 `sudo apt-get install maven`
