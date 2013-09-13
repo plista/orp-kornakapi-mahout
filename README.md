@@ -108,7 +108,7 @@ USE kornakapi;`
 create kornakapi.conf
 copy paste in kornakapi.conf to /path/to/kornakapi.conf:
 
-Be sure that you changed the path of you model directory in this line in kornakapi.conf &lt;modelDirectory&gt/path/to/model/&lt;/modelDirectory&gt
+Be sure that you changed the path of you model directory in this line in kornakapi.conf &lt;modelDirectory&gt; /path/to/model/&lt; /modelDirectory&gt;
 
 **11. Start Kornakapi
 `cd /path/to/your/kornakapi/`
