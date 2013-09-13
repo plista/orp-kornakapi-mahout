@@ -2,9 +2,9 @@
 
 namespace Plista\Orp\KornakapiMatrixFactorization;
 
+use Org\Plista\Kornakapi\Kornakapi;
 use PDO;
 use Plista\Orp\Sdk\Context;
-use Plista\Orp\Kornakapi\Kornakapi;
 use Plista\Orp\Sdk\ValidationException;
 
 /**

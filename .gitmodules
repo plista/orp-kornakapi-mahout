@@ -1,6 +1,6 @@
 [submodule "orp-sdk-php"]
-	path = /classes/Plista/Orp/orp-sdk-php/
-	url = git://github.com/plista/orp-sdk-php/
-[submodule "/usr/share/plista/orp-kornakapi-mahout/classes/Plista/Orp/kornakapi"]
-	path = /usr/share/plista/orp-kornakapi-mahout/classes/Plista/Orp/kornakapi
+	path = classes/Plista/Orp/orp-sdk-php
+	url = git://github.com/plista/orp-sdk-php
+[submodule "kornakapi"]
+	path = classes/Plista/Orp/kornakapi
 	url = git://github.com/plista/kornakapi-php

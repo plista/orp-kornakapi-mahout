@@ -7,7 +7,7 @@ use Plista\Orp\Sdk\Context;
 
 /**
  * Class PushItem, this class adds new items to the pool, we use this in order to filter recommendations per domain
- * @package Plista\Orp\Sdk\KornakapiMatrixFactorization
+ * @package Plista\Orp\orp-sdk-php\KornakapiMatrixFactorization
  */
 class PushItem implements Handle {
 
