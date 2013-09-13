@@ -58,26 +58,24 @@ For further details you may want to have a look at http://php.net/manual/en/inst
 
 For further details you may want to have a look at http://githowto.com/
 
-**4. getting Sdk ready** <br>
-Have a look at the example provided in `classes/Plista/Orp/Sdk/Example`
 
-**5. getting data being written** <br>
+**4. getting data being written** <br>
 creating directory <br>
 `mkdir logs` <br>
 changing permissions <br>
 `chmod 0777 logs` <br>
 `chown www-data:www-data logs` <br>
 
-**6. Install Maven 3**<br>
+**5. Install Maven 3**<br>
 `sudo apt-get install maven`
 
-**7. Install mahout 0.8**<br>
+**6. Install mahout 0.8**<br>
 download mahout o.8 from http://mahout.apache.org/
 `tar xvf mahout-distribution-0.8-src.tar.gz`
 `cd mahout-distribution-0.8-src`
 `mvn install`
 
-**8. Install MySQL and Setup your Database**<br>
+**7. Install MySQL and Setup your Database**<br>
 `sudo apt-get install mysql-server`
 `mysql -u "username" -p "password"`
 `CREATE DATABASE kornakapi;
@@ -97,22 +95,22 @@ USE kornakapi;`
   PRIMARY KEY (label,item_id)
 );`
 
-**9. Get Kornakapi**<br>
+**8. Get Kornakapi**<br>
 `git clone https://github.com/plista/kornakapi.git kornakapi`
 
-**10. Configure Kornakapi Recommender**<br>
+**9. Configure Kornakapi Recommender**<br>
 `mkdir model`
 copy paste kornakapi.conf to /path/to/kornakapi.conf:
 
 Be sure that you changed the path of you model directory in this line in kornakapi.conf &lt;modelDirectory&gt; /path/to/model/&lt; /modelDirectory&gt;
 and username and password for you mysql db.
 
-**11. Start Kornakapi**<br>
+**10. Start Kornakapi**<br>
 `cd /path/to/your/kornakapi/`
 `mvn -Dkornakapi.conf=/path/to/kornakapi.conf tomcat:run`
 
 
-**12. Sign up** <br>
+**11. Sign up** <br>
 Sign up at http://orp.plista.com <br>
 Be sure to use the entire URL during the sign up process e.g.
 `http://servername.domain/index-sdk-example.php`
