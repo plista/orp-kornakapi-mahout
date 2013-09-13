@@ -110,35 +110,35 @@ copy paste in kornakapi.conf:
 
 &lt;configuration>
 
-  &lt;modelDirectory>/path/to/model/</modelDirectory>
- &lt;numProcessorsForTraining>8</numProcessorsForTraining>
+  &lt;modelDirectory>/path/to/model/&lt;/modelDirectory>
+ &lt;numProcessorsForTraining>8&lt;/numProcessorsForTraining>
 
  &lt;storageConfiguration>
-    &lt;jdbcDriverClass>com.mysql.jdbc.Driver</jdbcDriverClass>
-    &lt;jdbcUrl>jdbc:mysql://localhost/kornakapi</jdbcUrl>
-    &lt;username>dbuser</username>
-    &lt;password>secret</password>
+    &lt;jdbcDriverClass>com.mysql.jdbc.Driver&lt;/jdbcDriverClass>
+    &lt;jdbcUrl>jdbc:mysql://localhost/kornakapi&lt;/jdbcUrl>
+    &lt;username>dbuser&lt;/username>
+    &lt;password>secret&lt;/password>
   &lt;/storageConfiguration>
 
   &lt;itembasedRecommenders>
     &lt;itembasedRecommender>
       &lt;name>itembased</name>
-      &lt;similarityClass>org.apache.mahout.cf.taste.impl.similarity.LogLikelihoodSimilarity</similarityClass>
-      &lt;similarItemsPerItem>25</similarItemsPerItem>
-      &lt;retrainAfterPreferenceChanges>10000</retrainAfterPreferenceChanges>
-      &lt;retrainCronExpression>0 0 1 * * ?</retrainCronExpression>
+      &lt;similarityClass>org.apache.mahout.cf.taste.impl.similarity.LogLikelihoodSimilarity&lt;/similarityClass>
+      &lt;similarItemsPerItem>25&lt;/similarItemsPerItem>
+      &lt;retrainAfterPreferenceChanges>10000&lt;/retrainAfterPreferenceChanges>
+      &lt;retrainCronExpression>0 0 1 * * ?&lt;/retrainCronExpression>
     &lt;/itembasedRecommender>
   &lt;/itembasedRecommenders>
 
   &lt;factorizationbasedRecommenders>
     &lt;factorizationbasedRecommender>
       &lt;name>weighted-mf</name>
-      &lt;usesImplicitFeedback>false</usesImplicitFeedback>
-      &lt;numberOfFeatures>4</numberOfFeatures>
-      &lt;numberOfIterations>8</numberOfIterations>
-      &lt;lambda>0.065</lambda>
-      &lt;retrainAfterPreferenceChanges>2000</retrainAfterPreferenceChanges>
-      &lt;retrainCronExpression>0 0 1 * * ?</retrainCronExpression>
+      &lt;usesImplicitFeedback>true&lt;/usesImplicitFeedback>
+      &lt;numberOfFeatures>4&lt;/numberOfFeatures>
+      &lt;numberOfIterations>8&lt;/numberOfIterations>
+      &lt;lambda>0.065&lt;/lambda>
+      &lt;retrainAfterPreferenceChanges>2000&lt;/retrainAfterPreferenceChanges>
+      &lt;retrainCronExpression>0 0 1 * * ?&lt;/retrainCronExpression>
     &lt;/factorizationbasedRecommender>
   &lt;/factorizationbasedRecommenders>
 
