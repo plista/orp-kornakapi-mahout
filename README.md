@@ -86,8 +86,8 @@ download mahout o.8 from http://mahout.apache.org/<br>
 <br>
 `CREATE TABLE taste_candidates (
   label varchar(255) NOT NULL,
-  item_id bigint(20) NOT NULL,
-  PRIMARY KEY (label,item_id)
+  item_id bigint(20) NOT NULL,`<br>
+  `PRIMARY KEY (label,item_id)
 );`
 
 **8. Get Kornakapi**<br>
