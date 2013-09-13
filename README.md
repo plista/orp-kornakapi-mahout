@@ -103,7 +103,7 @@ USE kornakapi;`<br>
 copy paste kornakapi.conf to /path/to/kornakapi.conf:
 
 Be sure that you changed the path of you model directory in this line in kornakapi.conf &lt;modelDirectory&gt; /path/to/model/&lt; /modelDirectory&gt;
-and username and password for you mysql db.
+and under &lt;storageConfiguration&gt; adjust username and password for you mysql db.
 
 **10. Link the index-orp.php**<br>
 `cd /var/www/`<br>
