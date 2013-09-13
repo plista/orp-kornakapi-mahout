@@ -11,6 +11,8 @@ use Plista\Orp\Sdk\Context;
 class PushStatistic implements Handle {
 	protected $supported_action = array('impression', 'click');
 
+	private static $path = '/var/www/log/';
+
 	/**
 	 * @var int
 	 */
@@ -77,7 +79,7 @@ class PushStatistic implements Handle {
 		 */
 
 //		$today = date("m.d.y");
-//		$res = file_put_contents( 'PushStatistic_' . $today . '.log', serialize($body) . "\n", FILE_APPEND | LOCK_EX);
+//		$res = file_put_contents( self::$path.'PushStatistic_' . $today . '.log', serialize($body) . "\n", FILE_APPEND | LOCK_EX);
 //
 //		if (!$res) {
 //			throw new Exception('Error: Unable to write to statistic file :(');

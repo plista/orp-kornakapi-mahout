@@ -12,7 +12,6 @@ class FetchOnsite extends Fetch  {
 	 * @param int $limit
 	 */
 	public function fetchOnsite() {
-
 		return $this->fetch();
 	}
 }

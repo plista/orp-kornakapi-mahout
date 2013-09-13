@@ -3,12 +3,10 @@ namespace Plista\Orp\KornakapiMatrixFactorization;
 use Plista\Orp\Sdk\Handle;
 
 class PushErrorHandler implements Handle  {
-	private static $path = '';
+	private static $path = '/var/www/log/';
 
 	public function handle($error) {
-		/**
-		 * @var Model $model
-		 */
+
 		// writing body informations to file
 		$this->write_error($error);
 	}
@@ -24,7 +22,7 @@ class PushErrorHandler implements Handle  {
 	public function write_error($error) {
 		$today = date("m.d.y");
 		// writing errors in log file
-		$res = file_put_contents('error_' . $today . '.txt', serialize($error) . "\n", FILE_APPEND | LOCK_EX);
+		$res = file_put_contents(self::$path.'error_' . $today . '.txt', serialize($error) . "\n", FILE_APPEND | LOCK_EX);
 		if (!$res) {
 			throw new Exception('Error: Unable to write to error file :(');
 		}

@@ -106,17 +106,17 @@ class KornakapiRecommenderTest extends \PHPUnit_Framework_TestCase {
 
 
 
-		$result = $controller->handle($this->type_request, $this->body_request); //is working -> writing request to file and prints {"recs":{"ints":{"3":null},"floats":{"2":2}}} as answer
+		$result = $controller->handle($this->type_request, $this->body_request); // user based recommendation
 		if ($result instanceof \Plista\Orp\Sdk\Recs) {
 			$a=$result->toJSON();
 		}
 
-		$result = $controller->handle($this->type_request, $this->body_request2); //is working -> writing request to file and prints {"recs":{"ints":{"3":null},"floats":{"2":2}}} as answer
+		$result = $controller->handle($this->type_request, $this->body_request2); // item based recommendation
 		if ($result instanceof \Plista\Orp\Sdk\Recs) {
 			$a=$result->toJSON();
 		}
 
-		$result = $controller->handle($this->type_request, $this->body_request3); //is working -> writing request to file and prints {"recs":{"ints":{"3":null},"floats":{"2":2}}} as answer
+		$result = $controller->handle($this->type_request, $this->body_request3); // top rated recommendation (empt
 		if ($result instanceof \Plista\Orp\Sdk\Recs) {
 			$a=$result->toJSON();
 		}

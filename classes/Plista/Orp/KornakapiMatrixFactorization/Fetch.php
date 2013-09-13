@@ -27,8 +27,8 @@ use Plista\Orp\Sdk\Recs;
  * - HTTP Interface
  *
  * Response Rate on 8 core with 16 gb ram:
- * 	-86 ms
- * 	-ctr 1.5%
+ * 	~86 ms
+ *
  *
  *
  * ALS for implicit user rating (what is used here)
@@ -44,6 +44,8 @@ use Plista\Orp\Sdk\Recs;
  *
  */
 class Fetch implements Handle {
+
+	private static $path = '/var/www/log/';
 
 	/**
 	 * @var Model
@@ -69,84 +71,84 @@ class Fetch implements Handle {
 	 * @throws Exception
 	 */
 	public function fetch() {
-		//get the recommendations stored by the worker method
-			$res=array();
-			$userid = $this->userid;
-			$log='';
+	//get the recommendations stored by the worker method
+		$res=array();
+		$userid = $this->userid;
+		$log='';
 
-			$list = $this->model->getRead();
-			//check if we have a user id
-			if(isset($userid) || $userid != 0){
-				//check if user is allready contained in database, so we can give recommendations for user
+		$list = $this->model->getRead();
+		//check if we have a user id
+		if(isset($userid) || $userid != 0){
+			//check if user is allready contained in database, so we can give recommendations for user
 
-				if($this->model->userIndb($userid)){
-					$res = $list->recommend(
-						$this->model->getKornakapi_recommender(),
-						'userID',
-						array(strval($userid)),
-						strval($this->model->getDomainid()),
-						$this->model->getLimit()
-					);
-					$log.= 'userbased'.serialize($res) . "\n";
-					if(empty($res)){
-						$log.='empty userbased recommendation for user: '. strval($this->model->getUserid()). "\n";
-					}
-				}else{
-					$log.='user not in db: '. strval($this->model->getUserid()). "\n";
+			if($this->model->userIndb($userid)){
+				$res = $list->recommend(
+					$this->model->getKornakapi_recommender(),
+					'userID',
+					array(strval($userid)),
+					strval($this->model->getDomainid()),
+					$this->model->getLimit()
+				);
+				$log.= 'userbased'.serialize($res) . "\n";
+				if(empty($res)){
+					$log.='empty userbased recommendation for user: '. strval($this->model->getUserid()). "\n";
 				}
-
 			}else{
-				$log.='empty username' . "\n";
-			}
-			//if we do not have recommendations yet but we have an item id, we try to get item based recommendations
-			$itemid= $this->itemid;
-			if(empty($res) && isset($itemid)){
-				//check if item id is contained in database, so recommendations can be given for the current users item
-				if($this->model->itemIndb($itemid)){
-						if($itemid > 0){
-							$res = $list->recommend(
-								$this->model->getKornakapi_recommender(),
-								'itemIDs',
-								array(strval($this->itemid)),
-								strval($this->model->getDomainid()),
-								$this->model->getLimit()
-							);
-						$log.='itembased'. serialize($res) . "\n";
-						}
-						if(empty($res)){
-							$log.='empty itembased recommendation for item: '.strval($itemid). "\n";
-						}
-				}else{
-					$log.='item not in db: '.strval($itemid). "\n";
-				}
-			}
-			if(empty($res) && empty($itemid)){
-				$log.= 'No res and empty itemid' . "\n";
+				$log.='user not in db: '. strval($this->model->getUserid()). "\n";
 			}
 
-			//normalize results, write them in right format and create Recs object
-			$recs = array();
-			if(!empty($res)){
-				$res = $this->normalize($res);
-				foreach($res as $index => $result){
-					$recs['result'][]= $index;
-					if($result < 0.001){
-						$recs['score'][]= 0.001;//hotfix
+		}else{
+			$log.='empty username' . "\n";
+		}
+		//if we do not have recommendations yet but we have an item id, we try to get item based recommendations
+		$itemid= $this->itemid;
+		if(empty($res) && isset($itemid)){
+			//check if item id is contained in database, so recommendations can be given for the current users item
+			if($this->model->itemIndb($itemid)){
+					if($itemid > 0){
+						$res = $list->recommend(
+							$this->model->getKornakapi_recommender(),
+							'itemIDs',
+							array(strval($this->itemid)),
+							strval($this->model->getDomainid()),
+							$this->model->getLimit()
+						);
+					$log.='itembased'. serialize($res) . "\n";
 					}
-					else{
-						$recs['score'][]= $result;
+					if(empty($res)){
+						$log.='empty itembased recommendation for item: '.strval($itemid). "\n";
 					}
-				}
-				$recs = new Recs($recs);
+			}else{
+				$log.='item not in db: '.strval($itemid). "\n";
 			}
+		}
+		if(empty($res) && empty($itemid)){
+			$log.= 'No res and empty itemid' . "\n";
+		}
+
+		//normalize results, write them in right format and create Recs object
+		$recs = array();
+		if(!empty($res)){
+			$res = $this->normalize($res);
+			foreach($res as $index => $result){
+				$recs['result'][]= $index;
+				if($result < 0.001){
+					$recs['score'][]= 0.001;//hotfix
+				}
+				else{
+					$recs['score'][]= $result;
+				}
+			}
+			$recs = new Recs($recs);
+		}
 
 		//if nether item based nor user based recommendations are available return most viewed items
 		//TODO: Implement Mahout MostPopularItem Recommender
-			if(empty($recs)){
-				$log.='Returned Empty to: '.strval($userid). "\n";
-			}
-			file_put_contents( 'Fetch.log', $log. '------------------------'."\n", FILE_APPEND | LOCK_EX);
-			return $recs;
+		if(empty($recs)){
+			$log.='Returned Empty to: '.strval($userid). "\n";
+		}
+		file_put_contents( self::$path.'Fetch.log', $log. '------------------------'."\n", FILE_APPEND | LOCK_EX);
+		return $recs;
 
 	}
 
@@ -195,7 +197,6 @@ class Fetch implements Handle {
 		$this->userid =$context->getUser_cookie();
 		$this->model = new Model($context, $this->limit);
 		$this->model->validate();
-
 		return $this->fetch();
 	}
 

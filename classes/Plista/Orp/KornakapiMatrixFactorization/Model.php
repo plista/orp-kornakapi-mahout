@@ -96,7 +96,7 @@ class Model {
 	}
 
 	/**
-	 * geter for mysql db
+	 * geter for mysql db, check if db name, user (root) and pw are set properly
 	 * @return PDO
 	 */
 	private function getPDO() {
@@ -105,7 +105,7 @@ class Model {
 
 	/**
 	 *
-	 * chacks if userid exists in mysql database taste_preferences
+	 * checks if userid exists in mysql database taste_preferences
 	 * @param $userid
 	 * @return bool
 	 */
