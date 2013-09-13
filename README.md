@@ -97,7 +97,7 @@ download mahout o.8 from http://mahout.apache.org/<br>
 `mkdir model`<br>
 Edit kornakapi.conf in /path/to/orp-kornakapi-mahout/kornakapi.conf
 
-Be sure that you changed the path of you model directory in this line in kornakapi.conf &lt;modelDirectory&gt; /path/to/model/&lt; /modelDirectory&gt;
+Be sure to changed the path of your model directory in this line in kornakapi.conf &lt;modelDirectory&gt; /path/to/model/&lt; /modelDirectory&gt;
 and under &lt;storageConfiguration&gt; adjust username and password for you mysql db.<br>
 Also have a look at the number or cpu's, number of features, number of iterations, lambda in kornakapi.conf
 You might be interessted in reading http://dl.acm.org/citation.cfm?id=1511352
