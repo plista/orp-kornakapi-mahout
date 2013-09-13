@@ -1,6 +1,6 @@
 <?php
 
-namespace Plista\Orp\Sdk\KornakapiMatrixFactorization;
+namespace Plista\Orp\KornakapiMatrixFactorization;
 
 class Exception extends \Plista\Orp\Sdk\Exception {
 

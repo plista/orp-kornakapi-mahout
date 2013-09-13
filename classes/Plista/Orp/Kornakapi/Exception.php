@@ -1,5 +1,5 @@
 <?php
-namespace Plista\Orp\Sdk\Kornakapi;
+namespace Plista\Orp\Kornakapi;
 
 /**
  * Exception class for Kornakapi

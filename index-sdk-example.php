@@ -2,11 +2,10 @@
 require_once(__DIR__ . '/config.php');
 
 
-
-use Plista\Orp\Sdk\KornakapiMatrixFactorization\FetchOnsite;
-use Plista\Orp\Sdk\KornakapiMatrixFactorization\PushErrorHandler;
-use Plista\Orp\Sdk\KornakapiMatrixFactorization\PushItem;
-use Plista\Orp\Sdk\KornakapiMatrixFactorization\PushStatistic;
+use Plista\Orp\KornakapiMatrixFactorization\PushItem;
+use Plista\Orp\KornakapiMatrixFactorization\FetchOnsite;
+use Plista\Orp\KornakapiMatrixFactorization\PushErrorHandler;
+use Plista\Orp\KornakapiMatrixFactorization\PushStatistic;
 
 
 // define path

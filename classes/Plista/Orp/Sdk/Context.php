@@ -459,6 +459,7 @@ class Context {
 	 * @return int
 	 */
 	public function getUser_cookie() {
+		// TODO: do idMapping here
 		return $this->data['simple'][self::USER_COOKIE];
 	}
 

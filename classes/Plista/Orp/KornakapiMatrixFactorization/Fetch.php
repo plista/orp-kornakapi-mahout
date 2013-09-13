@@ -1,7 +1,7 @@
 <?php
-namespace Plista\Orp\Sdk\KornakapiMatrixFactorization;
+namespace Plista\Orp\KornakapiMatrixFactorization;
 
-use PDO;
+
 use Plista\Orp\Sdk\Context;
 use Plista\Orp\Sdk\Handle;
 use Plista\Orp\Sdk\Recs;
@@ -55,6 +55,8 @@ class Fetch implements Handle {
 	private $itemid;
 
 	private $request;
+
+	private $limit;
 
 	const SCORE = 2;
 	const ITEM = 3;

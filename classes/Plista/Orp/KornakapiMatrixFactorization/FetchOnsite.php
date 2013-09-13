@@ -1,5 +1,5 @@
 <?php
-namespace Plista\Orp\Sdk\KornakapiMatrixFactorization;
+namespace Plista\Orp\KornakapiMatrixFactorization;
 
 
 /**

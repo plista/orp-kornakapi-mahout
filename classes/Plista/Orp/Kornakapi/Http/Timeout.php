@@ -1,5 +1,5 @@
 <?php
-namespace Plista\Orp\Sdk\Kornakapi\Http;
+namespace Plista\Orp\Kornakapi\Http;
 
 /**
  * kornakapi timeout configuration

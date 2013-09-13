@@ -1,7 +1,6 @@
 <?php
-namespace Plista\Orp\Sdk\KornakapiMatrixFactorization;
+namespace Plista\Orp\KornakapiMatrixFactorization;
 
-use PDO;
 use Plista\Orp\Sdk\Handle;
 use Plista\Orp\Sdk\ValidationException;
 use Plista\Orp\Sdk\Context;

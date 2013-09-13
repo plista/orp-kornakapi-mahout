@@ -1,13 +1,11 @@
 <?php
-namespace Plista\Orp\Sdk\KornakapiMatrixFactorization;
 
-
+namespace Plista\Orp\KornakapiMatrixFactorization;
 
 use PDO;
 use Plista\Orp\Sdk\Context;
-use Plista\Orp\Sdk\Kornakapi\Kornakapi;
+use Plista\Orp\Kornakapi\Kornakapi;
 use Plista\Orp\Sdk\ValidationException;
-
 
 /**
  *
@@ -15,41 +13,35 @@ use Plista\Orp\Sdk\ValidationException;
 class Model {
 
 	private $userid;
-	private $firc_hash;
-	private $limit ;
-	private $itemid;
+	private $limit;
 	private $domainid;
 	private $kornakapi_recommender = 'weighted-mf';
 
-
-	public function __construct(Context $context, $limit=20) {
+	public function __construct(Context $context, $limit = 20) {
 		$this->domainid = $context->getPublisher();
 		$this->userid = $context->getUser_cookie();
-		if(!isset($this->userid)){
-			$this->userid=0;	// if no userid then set to zero and check in fetch to do itembased recommendation
+
+		if (!isset($this->userid)) {
+			$this->userid = 0; // if no userid then set to zero and check in fetch to do itembased recommendation
 		}
-		$this->firc_hash = 'test';
+
 		$this->domainid = $context->getPublisher();
-		$this->limit=$limit;
+		$this->limit = $limit;
 	}
 
 	public function validate() {
-
-		if (!isset($this->userid) ) {
+		if (!isset($this->userid)) {
 			throw new ValidationException('Userid has to be given.' . strval($this->userid));
 		}
 
 		if (empty($this->domainid)) {
 			throw new ValidationException('Domain id has to be given.');
 		}
+
 		if (empty($this->limit)) {
 			throw new ValidationException('Limit has to be given.');
 		}
-
-
 	}
-
-
 
 	public function getLimit() {
 		return $this->limit;
@@ -59,10 +51,6 @@ class Model {
 		return $this->userid;
 	}
 
-	public function getFirc() {
-		return $this->firc_hash;
-	}
-
 	public function getDomainid() {
 		return $this->domainid;
 	}
@@ -70,9 +58,6 @@ class Model {
 	public function getKornakapi_recommender() {
 		return $this->kornakapi_recommender;
 	}
-
-
-
 
 	/**
 	 * @return Kornakapi
@@ -90,7 +75,6 @@ class Model {
 		return $api;
 	}
 
-
 	/**
 	 * This method forces kornakapi to callculate recommendations
 	 */
@@ -99,13 +83,15 @@ class Model {
 
 		try {
 			$api->train($this->getKornakapi_recommender());
-
 		} catch (\Exception $e) {
-
 			print('train not succesfull');
 		}
 	}
-	public function getLabel(){
+
+	/**
+	 * @return int
+	 */
+	public function getLabel() {
 		return $this->domainid;
 	}
 
@@ -113,7 +99,7 @@ class Model {
 	 * geter for mysql db
 	 * @return PDO
 	 */
-	private function getPDO(){
+	private function getPDO() {
 		return new PDO('mysql:host=localhost;dbname=kornakapi;charset=utf8', 'root', '');
 	}
 
@@ -123,13 +109,15 @@ class Model {
 	 * @param $userid
 	 * @return bool
 	 */
-	public function userIndb($userid){
-		$sql='select item_id from taste_preferences where user_id ='.$userid;
+	public function userIndb($userid) {
+		$sql = 'select item_id from taste_preferences where user_id =' . $userid;
 		$stmt = $this->getPDO()->query($sql);
-		$userIndb =$stmt->fetchAll(PDO::FETCH_ASSOC);
-		if(empty($userIndb)){
+		$userIndb = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+		if (empty($userIndb)) {
 			return false;
 		}
+
 		return true;
 	}
 
@@ -139,13 +127,15 @@ class Model {
 	 * @param $itemid
 	 * @return bool
 	 */
-	public function itemIndb($itemid){
-		$sql='select user_id from taste_preferences where item_id ='.$itemid;
+	public function itemIndb($itemid) {
+		$sql = 'select user_id from taste_preferences where item_id =' . $itemid;
 		$stmt = $this->getPDO()->query($sql);
-		$userIndb =$stmt->fetchAll(PDO::FETCH_ASSOC);
-		if(empty($userIndb)){
+		$userIndb = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+		if (empty($userIndb)) {
 			return false;
 		}
+
 		return true;
 	}
 
@@ -155,21 +145,15 @@ class Model {
 	 * @param $label
 	 * @return bool
 	 */
-	public function itemlabelIndb($itemid, $label){
-		$sql='select item_id from taste_candidates where item_id ='.$itemid .'&& label ='.$label;
+	public function itemlabelIndb($itemid, $label) {
+		$sql = 'select item_id from taste_candidates where item_id =' . $itemid . '&& label =' . $label;
 		$stmt = $this->getPDO()->query($sql);
-		$userIndb =$stmt->fetchAll(PDO::FETCH_ASSOC);
-		if(empty($userIndb)){
+		$userIndb = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+		if (empty($userIndb)) {
 			return false;
 		}
+
 		return true;
 	}
-
-
-
-
-
-
-
-
 }
