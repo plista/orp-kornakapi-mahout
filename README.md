@@ -71,44 +71,44 @@ changing permissions <br>
 `chmod 0777 logs` <br>
 `chown www-data:www-data logs` <br>
 
-**6. Install Maven 3
-"sudo apt-get install maven"
+**6. Install Maven 3 **
+`sudo apt-get install maven`
 
-**7. Install mahout 0.8
+**7. Install mahout 0.8 **
 download mahout o.8 from http://mahout.apache.org/
-tar xvf mahout-distribution-0.8-src.tar.gz
-cd mahout-distribution-0.8-src
-mvn install
+`tar xvf mahout-distribution-0.8-src.tar.gz`
+`cd mahout-distribution-0.8-src`
+`mvn install`
 
-**8. Install MySQL and Setup your Database
-sudo apt-get install mysql-server
-mysql -u "username" -p "password"
-CREATE DATABASE kornakapi;
-USE kornakapi;
+**8. Install MySQL and Setup your Database**
+`sudo apt-get install mysql-server`
+`mysql -u "username" -p "password"`
+`CREATE DATABASE kornakapi;
+USE kornakapi;`
 
-CREATE TABLE taste_preferences (
+`CREATE TABLE taste_preferences (
   user_id bigint(20) NOT NULL,
   item_id bigint(20) NOT NULL,
   preference float NOT NULL,
   PRIMARY KEY (user_id,item_id),
   KEY item_id (item_id)
-);
+);`
 
-CREATE TABLE taste_candidates (
+`CREATE TABLE taste_candidates (
   label varchar(255) NOT NULL,
   item_id bigint(20) NOT NULL,
   PRIMARY KEY (label,item_id)
-);
+);`
 
-**9. Get Kornakapi
-git clone https://github.com/plista/kornakapi.git kornakapi
+**9. Get Kornakapi**
+`git clone https://github.com/plista/kornakapi.git kornakapi`
 
-**10. Configure Kornakapi Recommender
-mkdir model
+**10. Configure Kornakapi Recommender**
+`mkdir model`
 create kornakapi.conf
 copy paste in kornakapi.conf:
 
-<configuration>
+`<configuration>
 
   <modelDirectory>/path/to/model/</modelDirectory>
   <numProcessorsForTraining>8</numProcessorsForTraining>
@@ -142,13 +142,13 @@ copy paste in kornakapi.conf:
     </factorizationbasedRecommender>
   </factorizationbasedRecommenders>
 
-</configuration>
+</configuration>`
 
 Be sure that you changed the path of you model directory in this line in kornakapi.conf <modelDirectory>/path/to/model/</modelDirectory>
 
 **11. Start Kornakapi
-cd /path/to/your/kornakapi/
-mvn -Dkornakapi.conf=/path/to/kornakapi.conf tomcat:run
+`cd /path/to/your/kornakapi/`
+`mvn -Dkornakapi.conf=/path/to/kornakapi.conf tomcat:run`
 
 
 **12. Sign up** <br>
