@@ -95,10 +95,12 @@ download mahout o.8 from http://mahout.apache.org/<br>
 
 **9. Configure Kornakapi Recommender**<br>
 `mkdir model`<br>
-copy paste kornakapi.conf to /path/to/kornakapi.conf:
+Edit kornakapi.conf in /path/to/orp-kornakapi-mahout/kornakapi.conf
 
 Be sure that you changed the path of you model directory in this line in kornakapi.conf &lt;modelDirectory&gt; /path/to/model/&lt; /modelDirectory&gt;
-and under &lt;storageConfiguration&gt; adjust username and password for you mysql db.
+and under &lt;storageConfiguration&gt; adjust username and password for you mysql db.<br>
+Also have a look at the number or cpu's, number of features, number of iterations, lambda in kornakapi.conf
+You might be interessted in reading http://dl.acm.org/citation.cfm?id=1511352
 
 **10. Link the index-orp.php**<br>
 `cd /var/www/`<br>
