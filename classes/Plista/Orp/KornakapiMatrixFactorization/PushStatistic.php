@@ -72,17 +72,15 @@ class PushStatistic implements Handle {
 			$this->itemid =$context->getItem_source();
 			$this->push();
 		}
+		/**
+		 * uncomment for PushStatistic log
+		 */
 
-
-//
 //		$today = date("m.d.y");
 //		$res = file_put_contents( 'PushStatistic_' . $today . '.log', serialize($body) . "\n", FILE_APPEND | LOCK_EX);
 //
 //		if (!$res) {
 //			throw new Exception('Error: Unable to write to statistic file :(');
 //		}
-
-
-
 	}
 }

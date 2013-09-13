@@ -24,12 +24,6 @@ class PushItem implements Handle {
 	 */
 	private $itemid;
 
-	/**
-	 * subscription to item updates
-	 *
-	 */
-
-
 	public function __construct() {
 
 
@@ -51,6 +45,9 @@ class PushItem implements Handle {
 		return true;
 	}
 
+	/**
+	 * push item notifications to kornakapi
+	 */
 	public function push() {
 
 		if(!$this->model->itemlabelIndb($this->itemid,$this->label)){
@@ -63,11 +60,11 @@ class PushItem implements Handle {
 	 * @return mixed
 	 */
 	public function handle($body) {
-//		Context $context, $params
+
 
 		$data[Context::ITEM_SOURCE]= $body['id'];
 		$data[Context::PUBLISHER]= $body['domainid'];
-		$data[Context::USER_COOKIE]= 0;
+		$data[Context::USER_COOKIE]= 0;		//quickfix, User_id is not required for new item notifications, but read out in the model constructor
 
 		$context = new Context(array('simple'=>$data));
 		$this->model = new Model($context);

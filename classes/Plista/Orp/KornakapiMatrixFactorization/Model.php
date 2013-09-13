@@ -8,7 +8,8 @@ use Plista\Orp\Kornakapi\Kornakapi;
 use Plista\Orp\Sdk\ValidationException;
 
 /**
- *
+ * Class Model, this class handles some additional io operations
+ * @package Plista\Orp\KornakapiMatrixFactorization
  */
 class Model {
 
@@ -20,7 +21,6 @@ class Model {
 	public function __construct(Context $context, $limit = 20) {
 		$this->domainid = $context->getPublisher();
 		$this->userid = $context->getUser_cookie();
-
 		if (!isset($this->userid)) {
 			$this->userid = 0; // if no userid then set to zero and check in fetch to do itembased recommendation
 		}

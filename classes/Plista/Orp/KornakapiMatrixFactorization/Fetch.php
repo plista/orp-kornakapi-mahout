@@ -64,18 +64,12 @@ class Fetch implements Handle {
 	/**
 	 * This class, fetches the recommendations
 	 * first if userid is given and the userid is in taste_preferences, we ask kornakapi for recommendations for this user, based on his item history
-	 * if there is no userid  or the user is new (not in the database) but an itemid is given we ask kornakapi for recommendations similar to that item,
-	 * if even that doesnt work, the top items for that label are returned.
+	 * if there is no userid  or the user is new (not in the database) but an itemid is given we ask kornakapi for recommendations similar to that item.
 	 * @return array|Recs
 	 * @throws Exception
 	 */
 	public function fetch() {
-
-
 		//get the recommendations stored by the worker method
-
-
-
 			$res=array();
 			$userid = $this->userid;
 			$log='';
@@ -86,7 +80,6 @@ class Fetch implements Handle {
 				//check if user is allready contained in database, so we can give recommendations for user
 
 				if($this->model->userIndb($userid)){
-//					$this->model->push();
 					$res = $list->recommend(
 						$this->model->getKornakapi_recommender(),
 						'userID',
@@ -134,7 +127,6 @@ class Fetch implements Handle {
 			//normalize results, write them in right format and create Recs object
 			$recs = array();
 			if(!empty($res)){
-
 				$res = $this->normalize($res);
 				foreach($res as $index => $result){
 					$recs['result'][]= $index;
@@ -149,7 +141,7 @@ class Fetch implements Handle {
 			}
 
 		//if nether item based nor user based recommendations are available return most viewed items
-
+		//TODO: Implement Mahout MostPopularItem Recommender
 			if(empty($recs)){
 				$log.='Returned Empty to: '.strval($userid). "\n";
 			}
@@ -158,25 +150,23 @@ class Fetch implements Handle {
 
 	}
 
-
-
+	/**
+	 * Method that normalizes the scores of the recommendations by kornakapi
+	 * @param array $itemids
+	 * @return array
+	 */
 	private function normalize(array $itemids) {
 		if (empty($itemids)) {
 			return array();
 		}
-
 		$results = array();
 		foreach ($itemids as $item) {
 			$results[$item['itemID']] = $item['value'];
 		}
-
 		$highest = max($results);
-
 		return array_map(function ($x) use ($highest) {
 			return ($highest <= 0) ? 0 : $x / $highest;
 		}, $results);
-
-
 	}
 
 
@@ -200,11 +190,9 @@ class Fetch implements Handle {
 	public function handle($request) {
 		$this->request= $request;
 		$this->limit = $request['limit'];
-
 		$context = new Context($request['context']);
 		$this->itemid =$context->getItem_source();
 		$this->userid =$context->getUser_cookie();
-
 		$this->model = new Model($context, $this->limit);
 		$this->model->validate();
 
