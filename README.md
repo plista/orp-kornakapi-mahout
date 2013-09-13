@@ -108,7 +108,7 @@ USE kornakapi;`
 create kornakapi.conf
 copy paste in kornakapi.conf:
 
-'<configuration>
+\*<configuration>
 
   <modelDirectory>/path/to/model/</modelDirectory>
   <numProcessorsForTraining>8</numProcessorsForTraining>
@@ -142,7 +142,7 @@ copy paste in kornakapi.conf:
     </factorizationbasedRecommender>
   </factorizationbasedRecommenders>
 
-</configuration>'
+</configuration>\*
 
 Be sure that you changed the path of you model directory in this line in kornakapi.conf <modelDirectory>/path/to/model/</modelDirectory>
 
