@@ -74,13 +74,12 @@ download mahout o.8 from http://mahout.apache.org/<br>
 **7. Install MySQL and Setup your Database**<br>
 `sudo apt-get install mysql-server`<br>
 `mysql -u "username" -p "password"`<br>
-`CREATE DATABASE kornakapi;<br>
-USE kornakapi;`<br>
+`CREATE DATABASE kornakapi; USE kornakapi;`<br>
 
 `CREATE TABLE taste_preferences (
   user_id bigint(20) NOT NULL,
   item_id bigint(20) NOT NULL,
-  preference float NOT NULL,`<br>
+  preference float NOT NULL,` <br>
   `PRIMARY KEY (user_id,item_id),
   KEY item_id (item_id)
 );`
