@@ -2,18 +2,16 @@
 
 namespace PlistaTest\Orp\large\Sdk;
 
-use Plista\Orp\Sdk\KornakapiMatrixFactorization\FetchOnsite;
-use Plista\Orp\Sdk\KornakapiMatrixFactorization\ItemPushHandler;
-use Plista\Orp\Sdk\KornakapiMatrixFactorization\FetchOnsiteHandler;
-use Plista\Orp\Sdk\Example\ExampleUniversityPushErrorHandler;
-use Plista\Orp\Sdk\Example\ExampleUniversityPushStatisticHandler;
+use Plista\Orp\KornakapiMatrixFactorization\PushErrorHandler;
+use Plista\Orp\KornakapiMatrixFactorization\PushItem;
+use Plista\Orp\KornakapiMatrixFactorization\FetchOnsite;
+use Plista\Orp\KornakapiMatrixFactorization\PushStatistic;
 use Plista\Orp\Sdk;
-use Plista\Orp\Sdk\KornakapiMatrixFactorization\PushItem;
-use Plista\Orp\Sdk\KornakapiMatrixFactorization\PushStatistic;
+use Plista\Orp\Sdk\Controller;
 
 require_once __DIR__ . '/../../../bootstrap.php';
 
-class HowToUseTheSdkTest extends \PHPUnit_Framework_TestCase {
+class KornakapiRecommenderTest extends \PHPUnit_Framework_TestCase {
 
 	//event notification
 	private $body_notify0 = '{"context":{"simple":{"4":154136,"56":1138207,"29":17332,"27":1677,"52":1,"14":74964,"39":10018,"16":48811,"7":18975,"25":135672796,"42":0,"19":52193,"24":0,"6":431260,"5":655,"47":504183,"18":0,"37":1521522,"59":1275566,"17":48985,"22":1192744,"31":0,"13":2,"9":26886,"23":13,"49":27,"35":315003,"57":1},"lists":{"8":[18841,18842,48511],"10":[4,5,10],"11":[13836]},"clusters":{"46":{"472366":255,"761805":255,"472364":255},"33":{"120979":8,"32942589":7,"467281":5,"97641":4,"6039":3,"781282":2,"2514003":2,"126430":2,"19565752":2,"19370":2,"252613":1,"176903":1,"106968":1,"32941951":1,"31926":1,"2068209":0},"51":{"1":255},"1":{"7":255},"2":[11,11,61,60,61,26,21],"3":[55,28,34,91,23,21]}},"recs":{"ints":{"3":[135417990]}},"type":"impression","timestamp":1376047873577}';
@@ -64,11 +62,11 @@ class HowToUseTheSdkTest extends \PHPUnit_Framework_TestCase {
 	public function testGetEnabledIds() {
 		// for annotation have a look at Example\index.php
 
-		$controller = new \Plista\Orp\Sdk\Controller();
+		$controller = new Controller();
 
 		$handleItem = new PushItem();
 		$handleRequest = new FetchOnsite();
-		$handleError = new ExampleUniversityPushErrorHandler();
+		$handleError = new PushErrorHandler();
 		$handleNotify = new PushStatistic();
 
 		$controller->setHandler('item_update', $handleItem);
