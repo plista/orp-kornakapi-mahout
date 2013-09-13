@@ -70,16 +70,16 @@ changing permissions <br>
 `sudo apt-get install maven`
 
 **6. Install mahout 0.8**<br>
-download mahout o.8 from http://mahout.apache.org/
-`tar xvf mahout-distribution-0.8-src.tar.gz`
-`cd mahout-distribution-0.8-src`
-`mvn install`
+download mahout o.8 from http://mahout.apache.org/<br>
+`tar xvf mahout-distribution-0.8-src.tar.gz`<br>
+`cd mahout-distribution-0.8-src`<br>
+`mvn install`<br>
 
 **7. Install MySQL and Setup your Database**<br>
-`sudo apt-get install mysql-server`
-`mysql -u "username" -p "password"`
-`CREATE DATABASE kornakapi;
-USE kornakapi;`
+`sudo apt-get install mysql-server`<br>
+`mysql -u "username" -p "password"`<br>
+`CREATE DATABASE kornakapi;<br>
+USE kornakapi;`<br>
 
 `CREATE TABLE taste_preferences (
   user_id bigint(20) NOT NULL,
@@ -88,7 +88,7 @@ USE kornakapi;`
   `PRIMARY KEY (user_id,item_id),
   KEY item_id (item_id)
 );`
-
+<br>
 `CREATE TABLE taste_candidates (
   label varchar(255) NOT NULL,
   item_id bigint(20) NOT NULL,
@@ -99,14 +99,14 @@ USE kornakapi;`
 `git clone https://github.com/plista/kornakapi.git kornakapi`
 
 **9. Configure Kornakapi Recommender**<br>
-`mkdir model`
+`mkdir model`<br>
 copy paste kornakapi.conf to /path/to/kornakapi.conf:
 
 Be sure that you changed the path of you model directory in this line in kornakapi.conf &lt;modelDirectory&gt; /path/to/model/&lt; /modelDirectory&gt;
 and username and password for you mysql db.
 
 **10. Start Kornakapi**<br>
-`cd /path/to/your/kornakapi/`
+`cd /path/to/your/kornakapi/`<br>
 `mvn -Dkornakapi.conf=/path/to/kornakapi.conf tomcat:run`
 
 
