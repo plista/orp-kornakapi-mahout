@@ -50,9 +50,18 @@ For further details you may want to have a look at http://php.net/manual/en/inst
 `sudo apt-get install git`
 
  cloning the git<br>
-`git clone git://github.com/plista/orp-kornakapi-mahout.git`
+`git clone git://github.com/plista/orp-kornakapi-mahout.git`<br>
+'cd orp-kornakapi-mahout'<br>
+'git submodule init'<br>
+'git submodule update'<br>
 
-For further details you may want to have a look at http://githowto.com/
+After that you have to replace everything in config.php in .../orp-kornakapi-mahout/config.php
+with the following:
+<?php
+$classLoader = new SplClassLoader('Plista\\Orp\\Sdk', __DIR__ . '/classes');
+$classLoader->register(true);
+unset($classLoader);
+
 
 
 **4. getting data being written** <br>
