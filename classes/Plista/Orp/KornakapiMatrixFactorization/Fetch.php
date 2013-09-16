@@ -78,7 +78,7 @@ class Fetch implements Handle {
 
 		$list = $this->model->getRead();
 		//check if we have a user id
-		if(isset($userid) || $userid != 0){
+		if(isset($userid) && $userid != 0){
 			//check if user is allready contained in database, so we can give recommendations for user
 
 			if($this->model->userIndb($userid)){
@@ -89,7 +89,7 @@ class Fetch implements Handle {
 					strval($this->model->getDomainid()),
 					$this->model->getLimit()
 				);
-				$log.= 'userbased'.serialize($res) . "\n";
+//				$log.= 'userbased'.serialize($res) . "\n";
 				if(empty($res)){
 					$log.='empty userbased recommendation for user: '. strval($this->model->getUserid()). "\n";
 				}
@@ -113,7 +113,7 @@ class Fetch implements Handle {
 							strval($this->model->getDomainid()),
 							$this->model->getLimit()
 						);
-					$log.='itembased'. serialize($res) . "\n";
+						$log.='itembased'. serialize($res) . "\n";
 					}
 					if(empty($res)){
 						$log.='empty itembased recommendation for item: '.strval($itemid). "\n";

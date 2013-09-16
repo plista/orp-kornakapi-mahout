@@ -112,7 +112,7 @@ class Model {
 	public function userIndb($userid) {
 		$sql = 'select item_id from taste_preferences where user_id =' . $userid;
 		$stmt = $this->getPDO()->query($sql);
-		$userIndb = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		$userIndb = $stmt->fetch(PDO::FETCH_ASSOC);
 
 		if (empty($userIndb)) {
 			return false;
@@ -130,7 +130,7 @@ class Model {
 	public function itemIndb($itemid) {
 		$sql = 'select user_id from taste_preferences where item_id =' . $itemid;
 		$stmt = $this->getPDO()->query($sql);
-		$userIndb = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		$userIndb = $stmt->fetch(PDO::FETCH_ASSOC);
 
 		if (empty($userIndb)) {
 			return false;
