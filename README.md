@@ -51,9 +51,9 @@ For further details you may want to have a look at http://php.net/manual/en/inst
 
  cloning the git<br>
 `git clone git://github.com/plista/orp-kornakapi-mahout.git`<br>
-'cd orp-kornakapi-mahout'<br>
-'git submodule init'<br>
-'git submodule update'<br>
+`cd orp-kornakapi-mahout`<br>
+`git submodule init`<br>
+`git submodule update`<br>
 
 After that you have to replace everything in config.php in .../orp-kornakapi-mahout/config.php
 with the following:
