@@ -57,9 +57,9 @@ For further details you may want to have a look at http://php.net/manual/en/inst
 
 After that you have to replace everything in config.php in .../orp-kornakapi-mahout/config.php
 with the following:
-<?php
-$classLoader = new SplClassLoader('Plista\\Orp\\Sdk', __DIR__ . '/classes');
-$classLoader->register(true);
+<?php <br>
+$classLoader = new SplClassLoader('Plista\\\\Orp\\\\Sdk', \_\_DIR\_\_ . '/classes');<br>
+$classLoader->register(true);<br>
 unset($classLoader);
 
 
