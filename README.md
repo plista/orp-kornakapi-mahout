@@ -55,15 +55,6 @@ For further details you may want to have a look at http://php.net/manual/en/inst
 `git submodule init`<br>
 `git submodule update`<br>
 
-After that you have to replace everything in config.php in .../orp-kornakapi-mahout/config.php
-with the following:
-<?php <br>
-$classLoader = new SplClassLoader('Plista\\\\Orp\\\\Sdk', \_\_DIR\_\_ . '/classes');<br>
-$classLoader->register(true);<br>
-unset($classLoader);
-
-
-
 **4. getting data being written** <br>
 'cd /var/www/'
 creating directory <br>
@@ -76,7 +67,7 @@ changing permissions <br>
 `sudo apt-get install maven`
 
 **6. Install mahout 0.8**<br>
-download mahout o.8 from http://mahout.apache.org/<br>
+download mahout 0.8 from http://mahout.apache.org/<br>
 `tar xvf mahout-distribution-0.8-src.tar.gz`<br>
 `cd mahout-distribution-0.8-src`<br>
 `mvn install`<br>
