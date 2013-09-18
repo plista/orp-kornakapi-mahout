@@ -109,15 +109,10 @@ class Model {
 	 * @return bool
 	 */
 	public function userIndb($userid) {
-		$sql = 'select item_id from taste_preferences where user_id =' . $userid;
+		$sql = ' select exists(select 1 from taste_preferences where user_id = '. $userid .' limit 1)' ;
 		$stmt = $this->getPDO()->query($sql);
 		$userIndb = $stmt->fetch(PDO::FETCH_ASSOC);
-
-		if (empty($userIndb)) {
-			return false;
-		}
-
-		return true;
+		return array_pop($userIndb);
 	}
 
 	/**
@@ -127,15 +122,10 @@ class Model {
 	 * @return bool
 	 */
 	public function itemIndb($itemid) {
-		$sql = 'select user_id from taste_preferences where item_id =' . $itemid;
+		$sql = 'select exists(select 1 from taste_preferences where item_id = '. $itemid .' limit 1)';
 		$stmt = $this->getPDO()->query($sql);
-		$userIndb = $stmt->fetch(PDO::FETCH_ASSOC);
-
-		if (empty($userIndb)) {
-			return false;
-		}
-
-		return true;
+		$itemIndb = $stmt->fetch(PDO::FETCH_ASSOC);
+		return array_pop($itemIndb);
 	}
 
 	/**
