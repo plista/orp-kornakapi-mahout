@@ -25,7 +25,6 @@ class Model {
 			$this->userid = 0; // if no userid then set to zero and check in fetch to do itembased recommendation
 		}
 
-		$this->domainid = $context->getPublisher();
 		$this->limit = $limit;
 	}
 

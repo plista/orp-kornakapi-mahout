@@ -89,7 +89,7 @@ class Fetch implements Handle {
 					strval($this->model->getDomainid()),
 					$this->model->getLimit()
 				);
-//				$log.= 'userbased'.serialize($res) . "\n";
+				$log.= 'userbased'.serialize($res) . "\n";
 				if(empty($res)){
 					$log.='empty userbased recommendation for user: '. strval($this->model->getUserid()). "\n";
 				}
@@ -190,7 +190,6 @@ class Fetch implements Handle {
 	 * @return mixed
 	 */
 	public function handle($request) {
-		$this->request= $request;
 		$this->limit = $request['limit'];
 		$context = new Context($request['context']);
 		$this->itemid =$context->getItem_source();
