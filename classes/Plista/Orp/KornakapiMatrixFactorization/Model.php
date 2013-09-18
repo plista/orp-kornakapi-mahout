@@ -20,7 +20,7 @@ class Model {
 
 	public function __construct(Context $context, $limit = 20) {
 		$this->domainid = $context->getPublisher();
-		$this->userid = $context->getUser_cookie();
+		$this->userid = $this->idMapping($context->getUser_cookie());
 		if (!isset($this->userid)) {
 			$this->userid = 0; // if no userid then set to zero and check in fetch to do itembased recommendation
 		}
@@ -100,7 +100,7 @@ class Model {
 	 * @return PDO
 	 */
 	private function getPDO() {
-		return new PDO('mysql:host=localhost;dbname=kornakapi;charset=utf8', 'root', '');
+		return new PDO('mysql:host=localhost;dbname=kornakapi;charset=utf8', 'username', 'password');
 	}
 
 	/**
@@ -155,5 +155,18 @@ class Model {
 		}
 
 		return true;
+	}
+
+	/**
+	 * Plista user_id's can exceed the integer limit, unfortunately mahout's indexes are limited to integer, therefore we do this
+	 * simple remapping
+	 * @param $globalUserID
+	 * @return int|number
+	 */
+	public function idMapping($globalUserID){
+		if($globalUserID == 0){
+			return 0;
+		}
+		return abs($globalUserID - 1000000000);
 	}
 }

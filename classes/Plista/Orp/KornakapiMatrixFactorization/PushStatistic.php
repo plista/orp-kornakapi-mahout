@@ -64,7 +64,7 @@ class PushStatistic implements Handle {
 	public function handle($body) {
 		$context = new Context($body['context']);
 		$this->model = new Model($context);
-		$this->userid = $body['context']['simple']['57'];
+		$this->userid = $this->idMapping($body['context']['simple']['57']);
 
 		if(isset($body['recs']['ints'][3][0])){	//if click
 			$this->itemid = $body['recs']['ints'][3][0];
@@ -84,5 +84,18 @@ class PushStatistic implements Handle {
 //		if (!$res) {
 //			throw new Exception('Error: Unable to write to statistic file :(');
 //		}
+	}
+
+	/**
+	 * Plista user_id's can exceed the integer limit, unfortunately mahout's indexes are limited to integer, therefore we do this
+	 * simple remapping
+	 * @param $globalUserID
+	 * @return int|number
+	 */
+	public function idMapping($globalUserID){
+		if($globalUserID == 0){
+			return 0;
+		}
+		return abs($globalUserID - 1000000000);
 	}
 }

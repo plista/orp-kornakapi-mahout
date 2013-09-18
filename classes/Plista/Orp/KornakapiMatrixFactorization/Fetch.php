@@ -194,10 +194,23 @@ class Fetch implements Handle {
 		$this->limit = $request['limit'];
 		$context = new Context($request['context']);
 		$this->itemid =$context->getItem_source();
-		$this->userid =$context->getUser_cookie();
+		$this->userid =$this->idMapping($context->getUser_cookie());
 		$this->model = new Model($context, $this->limit);
 		$this->model->validate();
 		return $this->fetch();
+	}
+
+	/**
+	 * Plista user_id's can exceed the integer limit, unfortunately mahout's indexes are limited to integer, therefore we do this
+	 * simple remapping
+	 * @param $globalUserID
+	 * @return int|number
+	 */
+	public function idMapping($globalUserID){
+		if($globalUserID == 0){
+			return 0;
+		}
+		return abs($globalUserID - 1000000000);
 	}
 
 

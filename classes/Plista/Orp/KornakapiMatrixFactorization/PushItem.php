@@ -55,6 +55,12 @@ class PushItem implements Handle {
 		}
 	}
 
+	public function invalidateItem(){
+		if($this->model->itemlabelIndb($this->itemid,$this->label)){
+			$this->model->getRead()->deleteCandidate($this->label,$this->itemid);
+		}
+	}
+
 	/**
 	 * @param $body
 	 * @return mixed
@@ -71,7 +77,12 @@ class PushItem implements Handle {
 
 		$this->label = strval($body['domainid']);
 		$this->itemid = $body['id'];
-		$this->push();
 
+
+		if($body['flag']== 0){ //check for invalidation flag
+			$this->push();
+		}else{
+			$this->invalidateItem();
+		}
 	}
 }
