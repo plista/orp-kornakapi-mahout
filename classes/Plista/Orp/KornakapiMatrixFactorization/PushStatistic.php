@@ -52,7 +52,6 @@ class PushStatistic implements Handle {
 	 */
 	public function push() {
 
-
 		$this->model->getWrite()->setPreference(strval($this->userid), strval($this->itemid), 1);
 
 	}
@@ -92,10 +91,8 @@ class PushStatistic implements Handle {
 	 * @param $globalUserID
 	 * @return int|number
 	 */
-	public function idMapping($globalUserID){
-		if($globalUserID == 0){
-			return 0;
-		}
-		return abs($globalUserID - 1000000000);
-	}
+
+    public function idMapping($globalUserID){
+        return abs($globalUserID  % 2147483647);
+    }
 }

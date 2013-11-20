@@ -62,7 +62,7 @@ class Model {
 	 * @return Kornakapi
 	 */
 	public function getWrite() {
-		$api = new Kornakapi('http://localhost:8080/kornakapi/', 100);
+		$api = new Kornakapi('http://localhost:8080/kornakapi/', 1);
 		return $api;
 	}
 
@@ -70,7 +70,7 @@ class Model {
 	 * @return Kornakapi
 	 */
 	public function getRead() {
-		$api = new  Kornakapi('http://localhost:8080/kornakapi/', 100);
+		$api = new  Kornakapi('http://localhost:8080/kornakapi/', 1);
 		return $api;
 	}
 
@@ -99,7 +99,7 @@ class Model {
 	 * @return PDO
 	 */
 	private function getPDO() {
-		return new PDO('mysql:host=localhost;dbname=kornakapi;charset=utf8', 'username', 'password');
+		return new PDO('mysql:host=localhost;dbname=movielens;charset=utf8', '', '');
 	}
 
 	/**
@@ -137,7 +137,7 @@ class Model {
 	public function itemlabelIndb($itemid, $label) {
 		$sql = 'select item_id from taste_candidates where item_id =' . $itemid . '&& label =' . $label;
 		$stmt = $this->getPDO()->query($sql);
-		$userIndb = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		$userIndb = $stmt->fetch(PDO::FETCH_ASSOC);
 
 		if (empty($userIndb)) {
 			return false;
@@ -152,10 +152,7 @@ class Model {
 	 * @param $globalUserID
 	 * @return int|number
 	 */
-	public function idMapping($globalUserID){
-		if($globalUserID == 0){
-			return 0;
-		}
-		return abs($globalUserID - 1000000000);
-	}
+    public function idMapping($globalUserID){
+        return abs($globalUserID  % 2147483647);
+    }
 }

@@ -78,7 +78,7 @@ class Fetch implements Handle {
 
 		$list = $this->model->getRead();
 		//check if we have a user id
-		if(isset($userid) && $userid != 0){
+		if(isset($userid)){
 			//check if user is allready contained in database, so we can give recommendations for user
 
 			if($this->model->userIndb($userid)){
@@ -126,15 +126,27 @@ class Fetch implements Handle {
 			$log.= 'No res and empty itemid' . "\n";
 		}
 
+		//if nether item based nor user based recommendations are available return most viewed items
+		if(empty($res)){
+			$res = $list->recommend(
+				$this->model->getKornakapi_recommender(),
+				'userID',
+				array(strval(0)),			//<-- most unknown articles recommender?
+				strval($this->model->getDomainid()),
+				$this->model->getLimit()
+			);
+			$log.='ZeroUserBased'. serialize($res) . "\n";
+		}
+
 		//normalize results, write them in right format and create Recs object
 		$recs = array();
 		if(!empty($res)){
 			$res = $this->normalize($res);
 			foreach($res as $index => $result){
-				$recs['result'][]= $index;
-				if($result < 0.001){
-					$recs['score'][]= 0.001;//hotfix
-				}
+				$recs['result'][]= $index;	//hotfix
+				if($result < 0.001){		//Kornakapi aproximates similaritys iteratively,
+					$recs['score'][]= 0.001;// since we run just 8 iterations, values might be negativ in the beginning
+				}				// with increased amount of information about items or user appearingly this is stops happening
 				else{
 					$recs['score'][]= $result;
 				}
@@ -142,11 +154,7 @@ class Fetch implements Handle {
 			$recs = new Recs($recs);
 		}
 
-		//if nether item based nor user based recommendations are available return most viewed items
-		//TODO: Implement Mahout MostPopularItem Recommender
-		if(empty($recs)){
-			$log.='Returned Empty to: '.strval($userid). "\n";
-		}
+
 		file_put_contents( self::$path.'Fetch.log', $log. '------------------------'."\n", FILE_APPEND | LOCK_EX);
 		return $recs;
 
@@ -206,11 +214,6 @@ class Fetch implements Handle {
 	 * @return int|number
 	 */
 	public function idMapping($globalUserID){
-		if($globalUserID == 0){
-			return 0;
-		}
-		return abs($globalUserID - 1000000000);
+        return abs($globalUserID  % 2147483647);
 	}
-
-
 }
