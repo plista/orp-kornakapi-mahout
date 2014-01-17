@@ -24,11 +24,19 @@ class PushItem implements Handle {
 	 */
 	private $itemid;
 
+	/**
+	 *
+	 */
 	public function __construct() {
 
 
 	}
 
+	/**
+	 * @param $item
+	 * @return bool
+	 * @throws \Plista\Orp\Sdk\ValidationException
+	 */
 	public function validate($item) {
 		if (empty($item)) {
 			throw new ValidationException('Error: item is empty');
@@ -55,6 +63,9 @@ class PushItem implements Handle {
 		}
 	}
 
+	/**
+	 *
+	 */
 	public function invalidateItem(){
 		if($this->model->itemlabelIndb($this->itemid,$this->label)){
 			$this->model->getRead()->deleteCandidate($this->label,$this->itemid);
@@ -77,6 +88,10 @@ class PushItem implements Handle {
 
 		$this->label = strval($body['domainid']);
 		$this->itemid = $body['id'];
+
+		if($this->itemid == 0){
+			return;
+		}
 
 
 		if($body['flag']== 0){ //check for invalidation flag

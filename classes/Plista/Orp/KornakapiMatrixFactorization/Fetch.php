@@ -71,14 +71,14 @@ class Fetch implements Handle {
 	 * @throws Exception
 	 */
 	public function fetch() {
-	//get the recommendations stored by the worker method
+		//get the recommendations stored by the worker method
 		$res=array();
 		$userid = $this->userid;
 		$log='';
 
 		$list = $this->model->getRead();
 		//check if we have a user id
-		if(isset($userid)){
+		if(isset($userid) && $userid != 0){
 			//check if user is allready contained in database, so we can give recommendations for user
 
 			if($this->model->userIndb($userid)){
@@ -105,19 +105,19 @@ class Fetch implements Handle {
 		if(empty($res) && isset($itemid)){
 			//check if item id is contained in database, so recommendations can be given for the current users item
 			if($this->model->itemIndb($itemid)){
-					if($itemid > 0){
-						$res = $list->recommend(
-							$this->model->getKornakapi_recommender(),
-							'itemIDs',
-							array(strval($this->itemid)),
-							strval($this->model->getDomainid()),
-							$this->model->getLimit()
-						);
-						$log.='itembased'. serialize($res) . "\n";
-					}
-					if(empty($res)){
-						$log.='empty itembased recommendation for item: '.strval($itemid). "\n";
-					}
+				if($itemid > 0){
+					$res = $list->recommend(
+						$this->model->getKornakapi_recommender(),
+						'itemIDs',
+						array(strval($this->itemid)),
+						strval($this->model->getDomainid()),
+						$this->model->getLimit()
+					);
+					$log.='itembased'. serialize($res) . "\n";
+				}
+				if(empty($res)){
+					$log.='empty itembased recommendation for item: '.strval($itemid). "\n";
+				}
 			}else{
 				$log.='item not in db: '.strval($itemid). "\n";
 			}
@@ -126,27 +126,15 @@ class Fetch implements Handle {
 			$log.= 'No res and empty itemid' . "\n";
 		}
 
-		//if nether item based nor user based recommendations are available return most viewed items
-		if(empty($res)){
-			$res = $list->recommend(
-				$this->model->getKornakapi_recommender(),
-				'userID',
-				array(strval(0)),			//<-- most unknown articles recommender?
-				strval($this->model->getDomainid()),
-				$this->model->getLimit()
-			);
-			$log.='ZeroUserBased'. serialize($res) . "\n";
-		}
-
 		//normalize results, write them in right format and create Recs object
 		$recs = array();
 		if(!empty($res)){
 			$res = $this->normalize($res);
 			foreach($res as $index => $result){
-				$recs['result'][]= $index;	//hotfix
-				if($result < 0.001){		//Kornakapi aproximates similaritys iteratively,
-					$recs['score'][]= 0.001;// since we run just 8 iterations, values might be negativ in the beginning
-				}				// with increased amount of information about items or user appearingly this is stops happening
+				$recs['result'][]= $index;
+				if($result < 0.001){
+					$recs['score'][]= 0.001;//hotfix
+				}
 				else{
 					$recs['score'][]= $result;
 				}
@@ -201,6 +189,9 @@ class Fetch implements Handle {
 		$this->limit = $request['limit'];
 		$context = new Context($request['context']);
 		$this->itemid =$context->getItem_source();
+		if($this->itemid ==0){
+			return array();
+		}
 		$this->userid =$this->idMapping($context->getUser_cookie());
 		$this->model = new Model($context, $this->limit);
 		$this->model->validate();
@@ -214,6 +205,8 @@ class Fetch implements Handle {
 	 * @return int|number
 	 */
 	public function idMapping($globalUserID){
-        return abs($globalUserID  % 2147483647);
+		return abs($globalUserID  % 2147483647);
 	}
+
+
 }

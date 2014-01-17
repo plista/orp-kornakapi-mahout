@@ -18,6 +18,10 @@ class Model {
 	private $domainid;
 	private $kornakapi_recommender = 'weighted-mf';
 
+	/**
+	 * @param Context $context
+	 * @param int $limit
+	 */
 	public function __construct(Context $context, $limit = 20) {
 		$this->domainid = $context->getPublisher();
 		$this->userid = $this->idMapping($context->getUser_cookie());
@@ -28,6 +32,9 @@ class Model {
 		$this->limit = $limit;
 	}
 
+	/**
+	 * @throws \Plista\Orp\Sdk\ValidationException
+	 */
 	public function validate() {
 		if (!isset($this->userid)) {
 			throw new ValidationException('Userid has to be given.' . strval($this->userid));
@@ -42,18 +49,30 @@ class Model {
 		}
 	}
 
+	/**
+	 * @return int
+	 */
 	public function getLimit() {
 		return $this->limit;
 	}
 
+	/**
+	 * @return int
+	 */
 	public function getUserid() {
 		return $this->userid;
 	}
 
+	/**
+	 * @return int
+	 */
 	public function getDomainid() {
 		return $this->domainid;
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getKornakapi_recommender() {
 		return $this->kornakapi_recommender;
 	}
@@ -61,16 +80,8 @@ class Model {
 	/**
 	 * @return Kornakapi
 	 */
-	public function getWrite() {
-		$api = new Kornakapi('http://localhost:8080/kornakapi/', 1);
-		return $api;
-	}
-
-	/**
-	 * @return Kornakapi
-	 */
 	public function getRead() {
-		$api = new  Kornakapi('http://localhost:8080/kornakapi/', 1);
+		$api = new  Kornakapi('http://localhost:8080/kornakapi/', 100);
 		return $api;
 	}
 
@@ -78,7 +89,7 @@ class Model {
 	 * This method forces kornakapi to callculate recommendations
 	 */
 	public function push() {
-		$api = $this->getWrite();
+		$api = $this->getRead();
 
 		try {
 			$api->train($this->getKornakapi_recommender());
@@ -99,7 +110,7 @@ class Model {
 	 * @return PDO
 	 */
 	private function getPDO() {
-		return new PDO('mysql:host=localhost;dbname=movielens;charset=utf8', '', '');
+		return new PDO('mysql:host=localhost;dbname=kornakapi;charset=utf8', 'root', '');
 	}
 
 	/**
@@ -147,12 +158,26 @@ class Model {
 	}
 
 	/**
+	 * @param $item
+	 * @param $user
+	 * @return mixed
+	 */
+	public function itemuserIndb($item, $user){
+		$sql = 'select exists(select 1 from taste_preferences where item_id = '. $item .' && user_id = '. $user .' limit 1)';
+		$stmt = $this->getPDO()->query($sql);
+		$itemIndb = $stmt->fetch(PDO::FETCH_ASSOC);
+		return array_pop($itemIndb);
+	}
+
+
+	/**
 	 * Plista user_id's can exceed the integer limit, unfortunately mahout's indexes are limited to integer, therefore we do this
 	 * simple remapping
 	 * @param $globalUserID
 	 * @return int|number
 	 */
-    public function idMapping($globalUserID){
-        return abs($globalUserID  % 2147483647);
-    }
+	public function idMapping($globalUserID){
+		return abs($globalUserID % 2147483647);
+	}
+
 }

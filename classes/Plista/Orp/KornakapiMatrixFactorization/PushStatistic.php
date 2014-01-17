@@ -30,7 +30,11 @@ class PushStatistic implements Handle {
 	protected $model;
 
 
-
+	/**
+	 * @param $body
+	 * @return bool
+	 * @throws ValidationException
+	 */
 	public function validate($body) {
 		// checking if body contains a notification type
 		// additionally one is able to differentiate between a click, impression, engagement and cpo
@@ -50,9 +54,10 @@ class PushStatistic implements Handle {
 	/**
 	 * This method adds a new item and user to taste_preferences
 	 */
-	public function push() {
+	public function push($rating) {
 
-		$this->model->getWrite()->setPreference(strval($this->userid), strval($this->itemid), 1);
+
+		$this->model->getRead()->setPreference(strval($this->userid), strval($this->itemid), $rating);
 
 	}
 
@@ -64,14 +69,25 @@ class PushStatistic implements Handle {
 		$context = new Context($body['context']);
 		$this->model = new Model($context);
 		$this->userid = $this->idMapping($body['context']['simple']['57']);
-
-		if(isset($body['recs']['ints'][3][0])){	//if click
-			$this->itemid = $body['recs']['ints'][3][0];
-			$this->push();
+		if($this->userid == 0){
+			return;
 		}
-		if($context->getItem_source()){	//if impression
-			$this->itemid =$context->getItem_source();
-			$this->push();
+
+		if(isset($body['recs']['ints'][3][0]) && $body['recs']['ints'][3][0] != 0) {	//if click
+			$this->itemid = $body['recs']['ints'][3][0];
+			$this->push(0.7);
+			$this->itemid = isset($body['context']['simple'][25]) ? $body['context']['simple'][25] : 0 ;
+			if($this->itemid){
+
+				$this->push(1);
+			}
+
+			if($context->getItem_source()){	//if impression
+				$this->itemid =$context->getItem_source();
+				if(!$this->model->itemuserIndb($this->itemid, $this->userid)){
+					$this->push(0.7);
+				}
+			}
 		}
 		/**
 		 * uncomment for PushStatistic log
@@ -91,8 +107,7 @@ class PushStatistic implements Handle {
 	 * @param $globalUserID
 	 * @return int|number
 	 */
-
-    public function idMapping($globalUserID){
-        return abs($globalUserID  % 2147483647);
-    }
+	public function idMapping($globalUserID){
+		return abs($globalUserID % 2147483647);
+	}
 }
