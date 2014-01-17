@@ -78,21 +78,20 @@ class PushStatistic implements Handle {
 			$this->push(0.7);
 			$this->itemid = isset($body['context']['simple'][25]) ? $body['context']['simple'][25] : 0 ;
 			if($this->itemid){
-
 				$this->push(1);
 			}
+		}
 
-			if($context->getItem_source()){	//if impression
-				$this->itemid =$context->getItem_source();
-				if(!$this->model->itemuserIndb($this->itemid, $this->userid)){
-					$this->push(0.7);
+		if(isset($body['context']['simple'][25])){	//if impression
+			$this->itemid =$body['context']['simple'][25];
+			if(!$this->model->itemuserIndb($this->itemid, $this->userid)){
+				$this->push(0.7);
 				}
 			}
-		}
-		/**
-		 * uncomment for PushStatistic log
-		 */
-
+//		/**
+//		 * uncomment for PushStatistic log
+//		 */
+//
 //		$today = date("m.d.y");
 //		$res = file_put_contents( self::$path.'PushStatistic_' . $today . '.log', serialize($body) . "\n", FILE_APPEND | LOCK_EX);
 //
@@ -100,6 +99,7 @@ class PushStatistic implements Handle {
 //			throw new Exception('Error: Unable to write to statistic file :(');
 //		}
 	}
+
 
 	/**
 	 * Plista user_id's can exceed the integer limit, unfortunately mahout's indexes are limited to integer, therefore we do this
