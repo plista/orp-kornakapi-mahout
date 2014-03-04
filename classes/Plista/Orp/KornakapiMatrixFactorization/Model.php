@@ -81,7 +81,7 @@ class Model {
 	 * @return Kornakapi
 	 */
 	public function getRead() {
-		$api = new  Kornakapi('http://localhost:8080/kornakapi/', 100);
+		$api = new  Kornakapi('http://localhost:8080/kornakapi/', 10000);
 		return $api;
 	}
 
